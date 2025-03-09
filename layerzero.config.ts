@@ -2,12 +2,12 @@ import { EndpointId } from '@layerzerolabs/lz-definitions'
 
 import type { OAppOmniGraphHardhat, OmniPointHardhat } from '@layerzerolabs/toolbox-hardhat'
 
-const lzero_ethereum: OmniPointHardhat = {
+const ethereum: OmniPointHardhat = {
     eid: EndpointId.ETHEREUM_V2_MAINNET,
     contractName: 'MyOApp',
 }
 
-const lzero_arbitrum: OmniPointHardhat = {
+const arbitrum: OmniPointHardhat = {
     eid: EndpointId.ARBITRUM_V2_MAINNET,
     contractName: 'MyOApp',
 }
@@ -15,56 +15,66 @@ const lzero_arbitrum: OmniPointHardhat = {
 const config: OAppOmniGraphHardhat = {
     contracts: [
         {
-            contract: lzero_ethereum
+            contract: ethereum,
         },
         {
-            contract: lzero_arbitrum,
+            contract: arbitrum,
         }
     ],
     connections: [
         {
-            from: lzero_ethereum,
-            to: lzero_arbitrum,
+            from: ethereum,
+            to: arbitrum,
             config: {
                 sendConfig: {
                     executorConfig: {
                         maxMessageSize: 99,
-                        executor: '0xb4B46bdAA835F8E4b4d8e208B6559cD267851051',
-                    },
-                },
-            },
-            /*config: {
-                sendConfig: {
-                    executorConfig: {
-                        maxMessageSize: 99,
-                        executor: '0x71d7a02cDD38BEa35E42b53fF4a42a37638a0066',
+                        executor: '0x17435ccE3d1B4fA2e5f8A08eD921D57C6762A180',
                     },
                     ulnConfig: {
-                        confirmations: BigInt(42),
+                        confirmations: BigInt(0),
                         requiredDVNs: [],
-                        optionalDVNs: [
-                            '0xe9dCF5771a48f8DC70337303AbB84032F8F5bE3E',
-                            '0x0AD50201807B615a71a39c775089C9261A667780',
-                        ],
-                        optionalDVNThreshold: 2,
+                        optionalDVNs: [],
+                        optionalDVNThreshold: 0,
                     },
                 },
                 receiveConfig: {
                     ulnConfig: {
-                        confirmations: BigInt(42),
-                        requiredDVNs: [],
-                        optionalDVNs: [
-                            '0x3Eb0093E079EF3F3FC58C41e13FF46c55dcb5D0a',
-                            '0x0AD50201807B615a71a39c775089C9261A667780',
-                        ],
-                        optionalDVNThreshold: 2,
+                        confirmations: BigInt(0),
+                        requiredDVNs: ['0xb4B46bdAA835F8E4b4d8e208B6559cD267851051'],
+                        optionalDVNs: [],
+                        optionalDVNThreshold: 0,
                     },
                 },
-            },*/
+                enforcedOptions: [],
+            },
         },
         {
-            from: lzero_arbitrum,
-            to: lzero_ethereum,
+            from: arbitrum,
+            to: ethereum,
+            config: {
+                sendConfig: {
+                    executorConfig: {
+                        maxMessageSize: 99,
+                        executor: '0x17435ccE3d1B4fA2e5f8A08eD921D57C6762A180',
+                    },
+                    ulnConfig: {
+                        confirmations: BigInt(0),
+                        requiredDVNs: [],
+                        optionalDVNs: [],
+                        optionalDVNThreshold: 0,
+                    },
+                },
+                receiveConfig: {
+                    ulnConfig: {
+                        confirmations: BigInt(0),
+                        requiredDVNs: ['0xb4B46bdAA835F8E4b4d8e208B6559cD267851051'],
+                        optionalDVNs: [],
+                        optionalDVNThreshold: 0,
+                    },
+                },
+                enforcedOptions: [],
+            },
         },
     ],
 }

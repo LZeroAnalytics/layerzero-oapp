@@ -15,6 +15,8 @@ import { EndpointId } from '@layerzerolabs/lz-definitions'
 
 import './tasks/sendMessage';
 
+import "@nomicfoundation/hardhat-verify";
+
 // Set your preferred authentication method
 //
 // If you prefer using a mnemonic, set a MNEMONIC environment variable
@@ -24,11 +26,12 @@ const MNEMONIC = process.env.MNEMONIC
 // If you prefer to be authenticated using a private key, set a PRIVATE_KEY environment variable
 const PRIVATE_KEY = process.env.PRIVATE_KEY
 
+
 const accounts: HttpNetworkAccountsUserConfig | undefined = MNEMONIC
     ? { mnemonic: MNEMONIC }
     : PRIVATE_KEY
-      ? [PRIVATE_KEY]
-      : undefined
+        ? [PRIVATE_KEY]
+        : undefined
 
 if (accounts == null) {
     console.warn(
@@ -37,6 +40,30 @@ if (accounts == null) {
 }
 
 const config: HardhatUserConfig = {
+    etherscan: {
+        apiKey: {
+            "arbitrum": "aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcD",
+            "ethereum": "aBcDeFgHiJkLmNoPqRsTuVwXyZ0123456789aBcD",
+        },
+        customChains: [
+            {
+                network: "arbitrum",
+                chainId: 3151910,
+                urls: {
+                    apiURL: "https://94af9ced4f0b44a5b17ebb1dc268de1b-blockscout-backend.dev.lzeroanalytics.com/api",
+                    browserURL: "https://94af9ced4f0b44a5b17ebb1dc268de1b-blockscout-frontend.dev.lzeroanalytics.com"
+                }
+            },
+            {
+                network: "ethereum",
+                chainId: 3151908,
+                urls: {
+                    apiURL: "https://f50b389c756a4eaa81e295fdbdab2ce4-blockscout-backend.dev.lzeroanalytics.com/api",
+                    browserURL: "https://f50b389c756a4eaa81e295fdbdab2ce4-blockscout-frontend.dev.lzeroanalytics.com"
+                }
+            },
+        ]
+    },
     paths: {
         cache: 'cache/hardhat',
     },
@@ -54,14 +81,14 @@ const config: HardhatUserConfig = {
         ],
     },
     networks: {
-        'lzero-ethereum': {
+        'ethereum': {
             eid: EndpointId.ETHEREUM_V2_MAINNET,
-            url: 'http://127.0.0.1:55233',
+            url: 'https://f50b389c756a4eaa81e295fdbdab2ce4-rpc.dev.lzeroanalytics.com',
             accounts,
         },
-        'lzero-arbitrum': {
+        'arbitrum': {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
-            url: 'http://127.0.0.1:58177',
+            url: 'https://94af9ced4f0b44a5b17ebb1dc268de1b-rpc.dev.lzeroanalytics.com',
             accounts,
         },
         hardhat: {
