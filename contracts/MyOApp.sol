@@ -20,17 +20,21 @@ contract MyOApp is OApp, OAppOptionsType3 {
      * @dev Encodes the message as bytes and sends it using the `_lzSend` internal function.
      * @return receipt A `MessagingReceipt` struct containing details of the message sent.
      */
-    function send(
-        uint32 _dstEid,
-        string memory _message,
-        bytes calldata _options
-    ) public payable returns (MessagingReceipt memory receipt) {
+    // Internal function that does the work but is not payable.
+    function _send(
+    uint32 _dstEid,
+    string memory _message,
+    bytes memory _options,
+    uint256 fee
+    ) internal returns (MessagingReceipt memory receipt) {
         bytes memory _payload = abi.encode(_message);
-        receipt = _lzSend(_dstEid, _payload, _options, MessagingFee(msg.value, 0), payable(msg.sender));
+        receipt = _lzSend(_dstEid, _payload, _options, MessagingFee(fee, 0), payable(msg.sender));
     }
 
+    // External payable function that collects the fee.
     function sendMessage(uint32 _dstEid, string memory _message) external payable returns (MessagingReceipt memory receipt) {
-        return this.send(_dstEid, _message, hex"0003010011010000000000000000000000000000ea60");
+        // Pass the collected msg.value to the internal function.
+        return _send(_dstEid, _message, hex"0003010011010000000000000000000000000000ea60", msg.value);
     }
 
     /**

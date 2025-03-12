@@ -17,6 +17,7 @@ pnpm install
 Before deploying, update the following in your hardhat.config.ts file:
 - RPC: Replace the RPC endpoints under `networks` with your own value. 
 - Etherscan: Under `etherscan` update the `browserUrl` for each network. The corresponding `apiURL` should use the same value as `browserUrl` but with "frontend" replaced by "backend" and with /api appended. Note: The api keys are arbitrary and do not need to be changed. 
+- Chain IDs: Ensure that all chain ids match your networks
 
 ### layerzero.config.ts
 
