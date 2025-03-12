@@ -1,108 +1,64 @@
-<p align="center">
-  <a href="https://layerzero.network">
-    <img alt="LayerZero" style="width: 400px" src="https://docs.layerzero.network/img/LayerZero_Logo_White.svg"/>
-  </a>
-</p>
+# OApp Example
 
-<p align="center">
-  <a href="https://layerzero.network" style="color: #a77dff">Homepage</a> | <a href="https://docs.layerzero.network/" style="color: #a77dff">Docs</a> | <a href="https://layerzero.network/developers" style="color: #a77dff">Developers</a>
-</p>
+This project follows the LayerZero CLI example.
 
-<h1 align="center">OApp Example</h1>
+## 1) Installation
 
-<p align="center">
-  <a href="https://docs.layerzero.network/contracts/oapp" style="color: #a77dff">Quickstart</a> | <a href="https://docs.layerzero.network/contracts/oapp-configuration" style="color: #a77dff">Configuration</a> | <a href="https://docs.layerzero.network/contracts/options" style="color: #a77dff">Message Execution Options</a> | <a href="https://docs.layerzero.network/contracts/endpoint-addresses" style="color: #a77dff">Endpoint Addresses</a>
-</p>
-
-<p align="center">Template project for getting started with LayerZero's  <code>OApp</code> contract development.</p>
-
-## 1) Developing Contracts
-
-#### Installing dependencies
-
-We recommend using `pnpm` as a package manager (but you can of course use a package manager of your choice):
+Install dependencies using:
 
 ```bash
 pnpm install
 ```
 
-#### Compiling your contracts
+## 2) Updating Configuration
 
-This project supports both `hardhat` and `forge` compilation. By default, the `compile` command will execute both:
+### hardhat.config.ts
 
-```bash
-pnpm compile
-```
+Before deploying, update the following in your hardhat.config.ts file:
+- RPC: Replace the RPC endpoints under `networks` with your own value. 
+- Etherscan: Under `etherscan` update the `browserUrl` for each network. The corresponding `apiURL` should use the same value as `browserUrl` but with "frontend" replaced by "backend" and with /api appended. Note: The api keys are arbitrary and do not need to be changed. 
 
-If you prefer one over the other, you can use the tooling-specific commands:
+### layerzero.config.ts
 
-```bash
-pnpm compile:forge
-pnpm compile:hardhat
-```
+Update the following:
+- Executor and DVN addresses: For the Ethereum → Arbitrum connection, use the first executor and the first DVN address returned by the LayerZero package.
+- For the Arbitrum → Ethereum connection, use the second executor and DVN address.
+- Make sure to update the DVN address in both the send configuration and receive configuration.
+- Confirmations: Optionally, change the number of confirmations for cross-chain messages (minimum 1).
 
-Or adjust the `package.json` to for example remove `forge` build:
+## 3) Deploying Contracts
 
-```diff
-- "compile": "$npm_execpath run compile:forge && $npm_execpath run compile:hardhat",
-- "compile:forge": "forge build",
-- "compile:hardhat": "hardhat compile",
-+ "compile": "hardhat compile"
-```
-
-#### Running tests
-
-Similarly to the contract compilation, we support both `hardhat` and `forge` tests. By default, the `test` command will execute both:
-
-```bash
-pnpm test
-```
-
-If you prefer one over the other, you can use the tooling-specific commands:
-
-```bash
-pnpm test:forge
-pnpm test:hardhat
-```
-
-Or adjust the `package.json` to for example remove `hardhat` tests:
-
-```diff
-- "test": "$npm_execpath test:forge && $npm_execpath test:hardhat",
-- "test:forge": "forge test",
-- "test:hardhat": "$npm_execpath hardhat test"
-+ "test": "forge test"
-```
-
-## 2) Deploying Contracts
-
-Set up deployer wallet/account:
-
-- Rename `.env.example` -> `.env`
-- Choose your preferred means of setting up your deployer wallet/account:
-
-```
-MNEMONIC="test test test test test test test test test test test junk"
-or...
-PRIVATE_KEY="0xabc...def"
-```
-
-To deploy your contracts to your desired blockchains, run the following command in your project's folder:
+Deploy your contracts using:
 
 ```bash
 npx hardhat lz:deploy
 ```
 
-More information about available CLI arguments can be found using the `--help` flag:
+
+After deployment, verify your contracts with the following command:
 
 ```bash
-npx hardhat lz:deploy --help
+npx hardhat verify <deployed_contract_address> "0x00000000000000000000000000000000000000" "0x00000000000000000000000000000000000000"
 ```
 
-By following these steps, you can focus more on creating innovative omnichain solutions and less on the complexities of cross-chain communication.
+Note: The two addresses provided after the deployed contract address can be arbitrary.
 
-<br></br>
+## 4) Setting Up LayerZero
 
-<p align="center">
-  Join our community on <a href="https://discord-layerzero.netlify.app/discord" style="color: #a77dff">Discord</a> | Follow us on <a href="https://twitter.com/LayerZero_Labs" style="color: #a77dff">Twitter</a>
-</p>
+Wire your OApp configuration with:
+
+```bash
+npx hardhat lz:oapp:wire --oapp-config layerzero.config.ts
+```
+
+Ensure that you have updated the executor and DVN addresses in layerzero.config.ts as described above.
+
+## 5) Sending Messages
+
+To send a message, run a command like:
+
+```bash
+npx hardhat sendMessage --network ethereum --dst-network arbitrum --message "Hello World"
+```
+
+Here, --network represents the source chain.

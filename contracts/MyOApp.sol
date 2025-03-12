@@ -24,9 +24,13 @@ contract MyOApp is OApp, OAppOptionsType3 {
         uint32 _dstEid,
         string memory _message,
         bytes calldata _options
-    ) external payable returns (MessagingReceipt memory receipt) {
+    ) public payable returns (MessagingReceipt memory receipt) {
         bytes memory _payload = abi.encode(_message);
         receipt = _lzSend(_dstEid, _payload, _options, MessagingFee(msg.value, 0), payable(msg.sender));
+    }
+
+    function sendMessage(uint32 _dstEid, string memory _message) external payable returns (MessagingReceipt memory receipt) {
+        return this.send(_dstEid, _message, hex"0003010011010000000000000000000000000000ea60");
     }
 
     /**

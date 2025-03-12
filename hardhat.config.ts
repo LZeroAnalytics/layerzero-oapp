@@ -48,18 +48,18 @@ const config: HardhatUserConfig = {
         customChains: [
             {
                 network: "arbitrum",
-                chainId: 3151910,
+                chainId: 3151908,
                 urls: {
-                    apiURL: "https://94af9ced4f0b44a5b17ebb1dc268de1b-blockscout-backend.dev.lzeroanalytics.com/api",
-                    browserURL: "https://94af9ced4f0b44a5b17ebb1dc268de1b-blockscout-frontend.dev.lzeroanalytics.com"
+                    apiURL: "https://7f2023cd6c6144d3ad39c1f6aabedd6d-blockscout-backend.dev.lzeroanalytics.com/api",
+                    browserURL: "https://7f2023cd6c6144d3ad39c1f6aabedd6d-blockscout-frontend.dev.lzeroanalytics.com"
                 }
             },
             {
                 network: "ethereum",
                 chainId: 3151908,
                 urls: {
-                    apiURL: "https://f50b389c756a4eaa81e295fdbdab2ce4-blockscout-backend.dev.lzeroanalytics.com/api",
-                    browserURL: "https://f50b389c756a4eaa81e295fdbdab2ce4-blockscout-frontend.dev.lzeroanalytics.com"
+                    apiURL: "https://4a8204237c274a81a5229e02125b6ca6-blockscout-backend.dev.lzeroanalytics.com/api",
+                    browserURL: "https://4a8204237c274a81a5229e02125b6ca6-blockscout-frontend.dev.lzeroanalytics.com"
                 }
             },
         ]
@@ -83,12 +83,12 @@ const config: HardhatUserConfig = {
     networks: {
         'ethereum': {
             eid: EndpointId.ETHEREUM_V2_MAINNET,
-            url: 'https://f50b389c756a4eaa81e295fdbdab2ce4-rpc.dev.lzeroanalytics.com',
+            url: 'https://4a8204237c274a81a5229e02125b6ca6-rpc.dev.lzeroanalytics.com',
             accounts,
         },
         'arbitrum': {
             eid: EndpointId.ARBITRUM_V2_MAINNET,
-            url: 'https://94af9ced4f0b44a5b17ebb1dc268de1b-rpc.dev.lzeroanalytics.com',
+            url: 'https://7f2023cd6c6144d3ad39c1f6aabedd6d-rpc.dev.lzeroanalytics.com',
             accounts,
         },
         hardhat: {
