@@ -39,7 +39,7 @@ npx hardhat lz:deploy
 After deployment, verify your contracts with the following command:
 
 ```bash
-npx hardhat verify <deployed_contract_address> "0x00000000000000000000000000000000000000" "0x00000000000000000000000000000000000000"
+npx hardhat verify <network_name> <deployed_contract_address> "0x00000000000000000000000000000000000000" "0x00000000000000000000000000000000000000"
 ```
 
 Note: The two addresses provided after the deployed contract address can be arbitrary.
