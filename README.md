@@ -27,6 +27,9 @@ Update the following:
 - Make sure to update the DVN address in both the send configuration and receive configuration.
 - Confirmations: Optionally, change the number of confirmations for cross-chain messages (minimum 1).
 
+### update .env
+Change the private key in the .env file with the private key of your pre-funded wallet
+
 ## 3) Deploying Contracts
 
 Deploy your contracts using:
@@ -39,8 +42,9 @@ npx hardhat lz:deploy
 After deployment, verify your contracts with the following command:
 
 ```bash
-npx hardhat verify <deployed_contract_address> "0x00000000000000000000000000000000000000" "0x00000000000000000000000000000000000000"
+npx hardhat verify --network <network_name> <deployed_contract_address> "0x0000000000000000000000000000000000000000" "0x0000000000000000000000000000000000000000"
 ```
+You can run this multiple times to verify the contracts on each chain.
 
 Note: The two addresses provided after the deployed contract address can be arbitrary.
 
